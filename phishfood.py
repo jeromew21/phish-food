@@ -25,11 +25,9 @@ class Phish:
             data = {}
             i = 1
             for a in attrs:
-                if i >= len(sys.argv):
-                    print('Not enough command line arguments supplied')
-                    sys.exit()
-                data[a] = sys.argv[i]
-                i += 1
+                if i < len(sys.argv):
+                    data[a] = sys.argv[i]
+                    i += 1
         else:
             with open('config.yaml') as f:
                 data = yaml.safe_load(f)
@@ -37,7 +35,7 @@ class Phish:
             if a in data:
                 val = data[a]
             else:
-                val = input("Enter {}:".format(a))
+                val = None
             setattr(self, a, val)
         self.action = self.url
         soup = BeautifulSoup(requests.get(self.url).text, 'html.parser')
