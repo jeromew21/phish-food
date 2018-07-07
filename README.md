@@ -56,3 +56,7 @@ Making request (27) to https://serviceinformationaccount.anouarwhms.com/wp-log/S
 Making request (28) to https://serviceinformationaccount.anouarwhms.com/wp-log/Sec/Bin/customer_center/customer-IDPP00C124/myaccount/signin/ with data {'login_email': 'TuyetBurgess668@yahoo.com', 'login_password': 'T6#bClnYt'}
 Making request (29) to https://serviceinformationaccount.anouarwhms.com/wp-log/Sec/Bin/customer_center/customer-IDPP00C124/myaccount/signin/ with data {'login_email': 'TempleReid390@hotmail.com', 'login_password': 'gZEiAdyEkG'}
 ```
+
+### To dos
+
+- Credit card fields

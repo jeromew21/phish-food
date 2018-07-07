@@ -67,7 +67,7 @@ class Phish:
             else:
                 addr = choice(FIRST_NAMES) + choice(LAST_NAMES)
             addr += str(randint(0, 1000))
-            addr += choice(('@gmail.com', '@yahoo.com', '@hotmail.com'))
+            addr += choice(('@gmail.com', '@gmail.com', '@gmail.com', '@yahoo.com',  '@yahoo.com', '@hotmail.com'))
             return addr
         return make_password()
     def make_request(self):
