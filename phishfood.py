@@ -1,4 +1,4 @@
-import requests, yaml, time
+import requests, yaml, time, sys
 import urllib.parse
 from bs4 import BeautifulSoup
 from random import choice, randint
@@ -20,15 +20,25 @@ with open('lastnames.txt') as f:
 class Phish:
     def __init__(self):
         self.request_count = 0
-        with open('config.yaml') as f:
-            data = yaml.safe_load(f)
-            attrs = ('url', 'method')
+        attrs = ('url', 'method')
+        if len(sys.argv) > 1:
+            data = {}
+            i = 1
             for a in attrs:
-                if a in data:
-                    val = data[a]
-                else:
-                    val = input("Enter {}:".format(a))
-                setattr(self, a, val)
+                if i >= len(sys.argv):
+                    print('Not enough command line arguments supplied')
+                    sys.exit()
+                data[a] = sys.argv[i]
+                i += 1
+        else:
+            with open('config.yaml') as f:
+                data = yaml.safe_load(f)
+        for a in attrs:
+            if a in data:
+                val = data[a]
+            else:
+                val = input("Enter {}:".format(a))
+            setattr(self, a, val)
         self.action = self.url
         soup = BeautifulSoup(requests.get(self.url).text, 'html.parser')
         forms = soup.find_all('form')
@@ -74,7 +84,6 @@ class Phish:
         print('Looping requests. Press ^C to stop.')
         while True:
             self.make_request()
-            print('Sleeping...')
             time.sleep(1.5)
 
 if __name__ == '__main__':
