@@ -12,6 +12,15 @@ Requires python3, requests, bs4, click
 
 Pass thr `URL` and the `method` in as arguments on the command line.
 
+```
+Usage: phishfood.py [OPTIONS]
+
+Options:
+  --url TEXT     URL of page with phishing form
+  --method TEXT  Method of filling form [serious/cheese]
+  --help         Show this message and exit.
+```
+
 Example: `python3 phishfood.py --url=http://badguysite.com --method=serious`
 
 - `url`: the URL where the form is located. Phish Food saves you the effort parses the HTML and sends data to the correct URL
