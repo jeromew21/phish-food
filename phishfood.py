@@ -1,5 +1,6 @@
 import requests, yaml, time, sys
 import urllib.parse
+import click
 from bs4 import BeautifulSoup
 from random import choice, randint
 
@@ -18,25 +19,10 @@ with open('lastnames.txt') as f:
     LAST_NAMES = [n.strip().capitalize() for n in f.readlines()]
  
 class Phish:
-    def __init__(self):
+    def __init__(self, url, method):
         self.request_count = 0
-        attrs = ('url', 'method')
-        if len(sys.argv) > 1:
-            data = {}
-            i = 1
-            for a in attrs:
-                if i < len(sys.argv):
-                    data[a] = sys.argv[i]
-                    i += 1
-        else:
-            with open('config.yaml') as f:
-                data = yaml.safe_load(f)
-        for a in attrs:
-            if a in data:
-                val = data[a]
-            else:
-                val = None
-            setattr(self, a, val)
+        self.url = url
+        self.method = method
         self.action = self.url
         soup = BeautifulSoup(requests.get(self.url).text, 'html.parser')
         forms = soup.find_all('form')
@@ -75,15 +61,26 @@ class Phish:
         for item in self.fields:
             data[item] = self.make_input(item)
         newcount = self.request_count + 1
-        print("Making request ({}) to {} with data {}".format(newcount, self.action, str(data)))
+        print("Making {} request ({}) to {} with data {}".format(
+            self.method,
+            newcount, 
+            self.action, 
+            str(data))
+        )
         r = requests.post(self.action, data)
         self.request_count = newcount
     def loop(self):
-        print('Looping requests. Press ^C to stop.')
+        print('Looping {} requests. Press ^C to stop.'.format(self.method))
         while True:
             self.make_request()
             time.sleep(1.5)
 
-if __name__ == '__main__':
-    p = Phish()
+@click.command()
+@click.option('--url', prompt='URL', help='URL of page with phishing form')
+@click.option('--method', default='serious', help='Method of filling form [serious/cheese]')
+def phish(url, method):
+    p = Phish(url, method)
     p.loop()
+
+if __name__ == '__main__':
+    phish()

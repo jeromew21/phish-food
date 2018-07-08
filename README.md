@@ -6,15 +6,13 @@ Attack phishing scams with this simple form bot.
 
 ## Installation
  
-Requires python3, requests, bs4
+Requires python3, requests, bs4, click
 
 ## Configuration
 
-In `config.yaml`, you can define the fields `url` and `method`. 
+Pass thr `URL` and the `method` in as arguments on the command line.
 
-Alternatively, pass them in as arguments on the command line.
-
-Example: `python3 phishfood.py url method`
+Example: `python3 phishfood.py --url=http://badguysite.com --method=serious`
 
 - `url`: the URL where the form is located. Phish Food saves you the effort parses the HTML and sends data to the correct URL
 - `method`: the way in which usernames and passwords and emails are decided. Either can be `cheese`, which sends crude, rude data to the phisher, or `serious` (default), which scrapes names from census data and creates realistic enough looking usernames and passwords.
